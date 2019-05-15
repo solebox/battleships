@@ -1,11 +1,16 @@
 import Fetch from 'isomorphic-unfetch';
 import Layout from '../components/Layout';
 import Board from '../components/Board';
+import {BOARDS} from "../utils/constants";
+import initStore from '../lib/initRedux'
+import withRedux from 'next-redux-wrapper'
+import { getBoard } from "../lib/redux/reducers/boards";
+
 const Game =  (props) => (
     <Layout>
         <div>
             <h1>game page</h1>
-			<Board data={props.data}/>
+			<Board data={props.data} />
         </div>
         <style jsx>{`
                     .board {
@@ -24,25 +29,21 @@ const Game =  (props) => (
         `}
         </style>
     </Layout>
-)
-Game.getInitialProps = async function(){
+);
+Game.getInitialProps = async function({store}){
     const res = await Fetch('https://my-json-server.typicode.com/typicode/demo/posts');
     const ret_data = await res.json();
-
-    return {
-       ddd: "aaa",
-       data: [
-            [1,1,1,0,0,0,0,0,0,0], 
-            [0,0,0,0,0,0,0,0,0,0], 
-            [0,0,0,0,0,3,3,3,3,0], 
-            [0,0,0,0,0,0,0,0,0,0], 
-            [0,0,2,0,0,0,0,0,0,0], 
-            [0,0,2,0,0,0,0,0,0,0], 
-            [0,0,2,0,0,0,0,0,0,0], 
-            [0,0,2,0,0,0,0,0,0,0], 
-            [0,0,2,0,0,0,0,0,0,0], 
-            [0,0,2,0,0,0,0,0,0,0], 
-       ]
+    const dispatchGetBoard = () => {
+        store.dispatch(getBoard())
     }
-}
-export default Game;
+    dispatchGetBoard()
+    const board = store.getState()['boards']['board']
+    return {
+       data: board,
+    }
+};
+
+const mapStateToProps = () => ({})
+const mapDispatchToProps = () => ({})
+
+export default withRedux(initStore, mapStateToProps, mapDispatchToProps)(Game);

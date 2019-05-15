@@ -1,6 +1,9 @@
 import Prices from '../components/Prices';
 import Fetch from 'isomorphic-unfetch';
 import Layout from '../components/Layout';
+import initStore from '../lib/initRedux'
+import withRedux from 'next-redux-wrapper'
+
 const Index = (props) => (
     <Layout>
         <div>
@@ -18,4 +21,7 @@ Index.getInitialProps = async function(){
         bpi: data.bpi
     }
 }
-export default Index;
+const mapStateToProps = () => ({})
+const mapDispatchToProps = () => ({})
+
+export default withRedux(initStore, mapStateToProps, mapDispatchToProps)(Index)
