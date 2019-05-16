@@ -5,28 +5,27 @@ import { fireZeeMissile } from "../lib/redux/reducers/boards";
 
 class Tile extends React.Component {
 			state = {
-                value: this.props.value, 
-                mode: this.props.mode,
-                row: this.props.row,
-                col: this.props.col
+                value: this.props.value,
+                mode: this.props.mode
 			}
             handleClick = (event) =>  {
                 this.props.dispatch(
-			        fireZeeMissile(this.state.row, this.state.col)
+			        fireZeeMissile(this.props.row, this.props.col)
                 )
-              let new_value = this.state.value *10 %10 == 0 ? this.state.value + 0.1 : this.state.value;
+              let new_value = this.props.boards.board[this.props.row][this.props.col]
               let new_mode = get_mode(new_value);
               this.setState({mode: new_mode, value: new_value});
             }
 			render() {
 				return (
 				<div style={styles.tile.get(this.state.mode)} onClick={this.handleClick}>
-                     {this.state.value} 
+                     {this.state.value}
 				</div>);
 			}
 }
 
 function mapStateToProps (state) {
-    return state
+    const {boards , dispatch} = state;
+    return {boards, dispatch}
 }
 export default connect(mapStateToProps)(Tile);

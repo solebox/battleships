@@ -1,7 +1,10 @@
+import {fireZeeMissile} from "../lib/redux/reducers/boards";
+
 const styles = require('../styles/styles.js');
 import Tile from './Tile';
 import {connect} from "react-redux";
 const helper = require('../utils/helper.js');
+
 
 const Board = ({board}) => {
                 const elements = board.map((row, index) => {
@@ -17,6 +20,8 @@ const Board = ({board}) => {
 				</div>);
 
 }
+
+
 
 function mapStateToProps (state) {
     const { board } = state.boards;
