@@ -1,0 +1,72 @@
+post /games/create (need to set min max)
+-> {"rows": 3, "columns": 3 }
+<- {"id": <game_id> }
+
+get /games/<game_id>/board
+<- {"board": [[0,0,0],[0,0,0],[0,0,0]] }
+
+get /games/<game_id>/status
+<- {"status": open/in progress/done}
+
+post /games/<game_id>/join
+-> {"player_id": <player_id>}
+<- {"success": true}
+
+get /games/<game_id>/players/<player_id>
+<- {"name": <player_name> }
+
+post /games/board-id/attack?x=1&y=3
+<- {"hit": true}
+
+0300222200
+0300000000
+0310000000
+0010005000
+0010005000
+0010044400
+0010000000
+000000000000000000000000000000
+
+
+get /leaderboard?format=json
+<-
+{
+  "players": [
+    {
+      "id": 2,
+      "win": 9,
+      "lost": 3,
+      "score": 6
+    },
+    {
+      "id": 4,
+      "win": 4,
+      "lost": 3,
+      "score": 1
+    },
+    {
+      "id": 9,
+      "win": 4,
+      "lost": 6,
+      "score": -2
+    }
+  ]
+}
+
+
+game
+{
+  "gameID": 123,
+  "turn": 11,
+  "lastTurn": {
+    "takenByPlayer": 2
+  },
+  "players": [
+    2,
+    4
+  ],
+  "currentPlayer": 4,
+  "board": 
+     [[0,0,0], [0,0,0],[0,0,0]
+    
+}
