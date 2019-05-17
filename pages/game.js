@@ -30,6 +30,7 @@ const Game =  (props) => (
         </style>
     </Layout>
 );
+
 Game.getInitialProps = async function({store}){
     const res = await Fetch('https://my-json-server.typicode.com/typicode/demo/posts');
     const ret_data = await res.json();
